@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "scripts": {
+    "up": "taze major -I",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build && electron-builder"
+  },
+  "debug": {
+    "env": {
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344"
+    }
+  },
+  "private": true,
+  "packageManager": "pnpm@7.12.0",
+  "name": "vitesse-lite-electron",
+  "main": "dist-electron/main/index.js",
+  "license": "ISC",
+  "eslintConfig": {
+    "rules": {
+      "no-console": "off"
+    },
+    "extends": "@antfu"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "vue-tsc": "^0.40.13",
+    "vitest": "^0.23.4",
+    "vite-plugin-pages": "^0.26.0",
+    "vite-plugin-electron": "^0.10.0",
+    "vite": "^3.1.3",
+    "unplugin-vue-components": "^0.22.7",
+    "unplugin-auto-import": "^0.11.2",
+    "unocss": "^0.45.25",
+    "typescript": "^4.8.3",
+    "taze": "^0.8.2",
+    "pnpm": "^7.12.2",
+    "jsdom": "^20.0.0",
+    "eslint": "^8.24.0",
+    "electron-builder": "^23.3.3",
+    "electron": "^21.1.0",
+    "@vue/test-utils": "^2.0.2",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@unocss/reset": "^0.45.25",
+    "@types/node": "^18.7.23",
+    "@iconify-json/carbon": "^1.1.8",
+    "@antfu/eslint-config": "^0.27.0"
+  },
+  "description": "<p align='center'>   <img src='https://user-images.githubusercontent.com/11247099/111864893-a457fd00-899e-11eb-9f05-f4b88987541d.png' alt='Vitesse - Opinionated Vite Starter Template' width='600'/> </p>",
+  "dependencies": {
+    "vue-router": "^4.1.5",
+    "vue": "^3.2.39",
+    "vite-electron-plugin": "^0.4.4",
+    "@vueuse/core": "^9.3.0"
+  },
+  "author": "hds"
+}
