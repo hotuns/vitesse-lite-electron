@@ -1,6 +1,3 @@
-/**
- * @see https://www.electron.build/configuration/configuration
- */
 {
   "appId": "YourAppID",
   "asar": true,

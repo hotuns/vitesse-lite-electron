@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ESNext",
-    "target": "es2016",
+    "target": "ESNext",
     "lib": ["DOM", "ESNext"],
     "strict": true,
     "jsx": "preserve",
@@ -13,6 +13,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "allowJs": true,
+    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "types": [
       "vite/client",
@@ -22,5 +23,9 @@
       "~/*": ["src/*"]
     }
   },
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "src",
+    "electron"
+  ],
+  // "exclude": ["dist", "node_modules"]
 }

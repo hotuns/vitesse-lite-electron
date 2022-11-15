@@ -9,7 +9,8 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import electron from 'vite-electron-plugin'
-import { customStart } from 'vite-electron-plugin/plugin'
+import renderer from 'vite-plugin-electron-renderer'
+import { customStart, loadViteEnv } from 'vite-electron-plugin/plugin'
 import pkg from './package.json'
 
 rmSync('dist-electron', { recursive: true, force: true })
@@ -28,12 +29,30 @@ export default defineConfig({
     electron({
       include: ['electron'],
       transformOptions: {
-        sourcemap: !!process.env.VSCODE_DEBUG,
+        sourcemap: true,
+        // sourcemap: !!process.env.VSCODE_DEBUG,
       },
       // Will start Electron via VSCode Debug
-      plugins: process.env.VSCODE_DEBUG
-        ? [customStart(debounce(() => console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App')))]
-        : undefined,
+      plugins: [
+        ...(process.env.VSCODE_DEBUG
+          ? [
+            // Will start Electron via VSCode Debug
+              customStart(debounce(() => console.log(/* For `.vscode/.debug.script.mjs` */'[startup] Electron App'))),
+            ]
+          : []),
+        // Allow use `import.meta.env.VITE_SOME_KEY` in Electron-Main
+        loadViteEnv(),
+      ],
+
+    }),
+
+    renderer({
+      // Enables use of Node.js API in the Renderer-process
+      nodeIntegration: true,
+      // Explicitly specify external modules
+      optimizeDeps: {
+        // include: ['serialport'],
+      },
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
@@ -41,13 +60,13 @@ export default defineConfig({
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
+      dts: 'src/auto-imports.d.ts',
       imports: [
         'vue',
         'vue/macros',
         'vue-router',
         '@vueuse/core',
       ],
-      dts: true,
       dirs: [
         './src/composables',
       ],
@@ -56,7 +75,7 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: true,
+      dts: 'src/components.d.ts',
     }),
 
     // https://github.com/antfu/unocss
